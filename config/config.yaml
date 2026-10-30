@@ -1,0 +1,72 @@
+app:
+  name: "google-maps-hotel-scraper"
+  environment: "development"
+  data_dir: "data"
+  snapshots_dir: "snapshots"
+  export_dir: "data/exports"
+
+database:
+  url: "sqlite+aiosqlite:///data/hotels.db"
+  echo_sql: false
+
+providers:
+  active: "google_maps_playwright"  # options: "google_maps_playwright", "google_places_api"
+  google_places_api:
+    api_key_env_var: "GOOGLE_PLACES_API_KEY"
+    language_code: "en"
+
+scraper:
+  concurrency: 2
+  headless: true
+  timeout_ms: 30000
+  slow_mo_ms: 50
+  min_delay_sec: 2.0
+  max_delay_sec: 4.5
+  viewport:
+    width: 1440
+    height: 900
+  locale: "en-US"
+  timezone_id: "UTC"
+  user_data_dir: "data/browser_context"
+
+  anti_bot:
+    rotate_user_agents: true
+    detect_captcha: true
+    captcha_cooldown_sec: 180
+    max_retries: 3
+    backoff_multiplier: 2.0
+
+  proxies:
+    enabled: false
+    rotation_strategy: "round_robin"
+    list: []
+
+regions:
+  - name: "Mumbai"
+    country: "India"
+    query_template: "hotels in {area}"
+    strategy: "grid" # "grid" or "neighborhoods"
+    bbox:
+      min_lat: 18.8928
+      max_lat: 19.2718
+      min_lng: 72.7758
+      max_lng: 73.0033
+    grid_step_km: 4.0
+    neighborhoods:
+      - "Colaba Mumbai"
+      - "Bandra West Mumbai"
+      - "Juhu Mumbai"
+      - "Andheri East Mumbai"
+      - "Powai Mumbai"
+      - "Nariman Point Mumbai"
+
+  - name: "Dubai"
+    country: "United Arab Emirates"
+    query_template: "hotels in {area}"
+    strategy: "neighborhoods"
+    neighborhoods:
+      - "Downtown Dubai"
+      - "Dubai Marina"
+      - "Palm Jumeirah"
+      - "Deira Dubai"
+      - "Business Bay Dubai"

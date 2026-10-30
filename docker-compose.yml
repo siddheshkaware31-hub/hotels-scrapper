@@ -1,0 +1,31 @@
+services:
+  scraper:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./data:/app/data
+      - ./snapshots:/app/snapshots
+      - ./config:/app/config
+    environment:
+      - ENVIRONMENT=production
+      - LOG_JSON=true
+      - DATABASE_URL=sqlite+aiosqlite:///data/hotels.db
+      - SCRAPER_HEADLESS=true
+    command: ["scrape", "--region", "Mumbai"]
+
+  # Optional PostgreSQL service (uncomment to swap SQLite for PostgreSQL)
+  # postgres:
+  #   image: postgres:16-alpine
+  #   restart: unless-stopped
+  #   environment:
+  #     POSTGRES_DB: hotel_scraper
+  #     POSTGRES_USER: postgres
+  #     POSTGRES_PASSWORD: password
+  #   ports:
+  #     - "5432:5432"
+  #   volumes:
+  #     - pgdata:/var/lib/postgresql/data
+
+# volumes:
+#   pgdata:

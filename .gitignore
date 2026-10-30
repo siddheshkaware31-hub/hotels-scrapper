@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+build/
+dist/
+*.egg-info/
+
+# Playwright browser state & snapshots
+data/browser_context/
+snapshots/
+*.png
+*.html
+
+# Data & database
+data/*.db
+data/*.sqlite
+data/exports/
+*.csv
+*.json
+
+# Environment
+.env
+.env.local
+
+# IDE & Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Testing & Coverage
+.pytest_cache/
+.coverage
+htmlcov/
